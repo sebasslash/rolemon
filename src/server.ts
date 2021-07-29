@@ -2,7 +2,7 @@ import { Client } from 'discord.js'
 import fastify from 'fastify'
 
 module RolemonServer {
-	const server = fastify({ logger: true })
+	const server = fastify({ logger: false })
 	export let client: Client
 
 	server.route({
@@ -25,7 +25,7 @@ module RolemonServer {
 				members[role.name] = role.members.map((m) => {
 					return {
 						username: m.user.username,
-						avatarUrl: m.user.avatar,
+						avatarUrl: m.user.avatarURL(),
 						discriminator: m.user.discriminator,
 					}
 				})

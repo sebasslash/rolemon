@@ -12,7 +12,8 @@
   "dependencies": {
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
-    "fastify": "^3.19.2"
+    "fastify": "^3.19.2",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^16.4.6",

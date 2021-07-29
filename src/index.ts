@@ -1,4 +1,6 @@
-import RolemonServer from "./server"
+import RolemonServer, { RolemonConfig } from "./server"
+import fs from 'fs'
+import yaml from 'js-yaml'
 import dotenv from 'dotenv'
 
 const Discord = require('discord.js'),
@@ -9,20 +11,20 @@ const TOKEN = process.env['ROLEMON_TOKEN']
 
 client.on('ready', () => {
 	client.user.setActivity('Monitoring roles')
+})
 
-	// initialize server only after bot is ready
+
+try {
+	const config = yaml.load(fs.readFileSync('./rolemon.yml', 'utf-8')) as RolemonConfig
+	client.login(config.token)
 	RolemonServer.client = client
+	RolemonServer.config = config
 	try {
 		RolemonServer.start()
 	} catch (err) {
 		console.error(err)
 		process.exit(1)
 	}
-})
-
-
-try {
-	client.login(TOKEN)
 } catch (err) {
 	console.error(err)
 }

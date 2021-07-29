@@ -7,24 +7,23 @@ const Discord = require('discord.js'),
 	client = new Discord.Client()
 
 dotenv.config()
-const TOKEN = process.env['ROLEMON_TOKEN']
 
 client.on('ready', () => {
 	client.user.setActivity('Monitoring roles')
 })
 
-
 try {
 	const config = yaml.load(fs.readFileSync('./rolemon.yml', 'utf-8')) as RolemonConfig
-	client.login(config.token)
+
+	config.token
+		? client.login(config.token)
+		: client.login(process.env['ROLEMON_TOKEN'])
+
 	RolemonServer.client = client
 	RolemonServer.config = config
-	try {
-		RolemonServer.start()
-	} catch (err) {
-		console.error(err)
-		process.exit(1)
-	}
+	RolemonServer.start()
+
 } catch (err) {
+	process.exit(1)
 	console.error(err)
 }

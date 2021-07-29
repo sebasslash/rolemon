@@ -24,7 +24,7 @@ module RolemonServer {
 			const guildId = req.query['guild_id']
 
 			if (config.allowed_guilds && !config.allowed_guilds.includes(guildId)) {
-				return res.code(401).send('Unauthorized guild access')
+				return res.code(400).send('Invalid guild access')
 			}
 
 			const guild = client.guilds.cache.get(guildId)
@@ -40,6 +40,7 @@ module RolemonServer {
 							username: m.user.username,
 							avatarUrl: m.user.avatarURL(),
 							discriminator: m.user.discriminator,
+							nickname: m.displayName
 						}
 					})
 				}
